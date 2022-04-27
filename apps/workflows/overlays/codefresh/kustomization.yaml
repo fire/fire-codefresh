@@ -11,3 +11,20 @@ patches:
 resources:
 - ../../base
 - ingress.yaml
+- rbac.yaml
+- artifact-repo.yaml
+patchesStrategicMerge:
+- |
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: argo-server
+- |
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: workflow-controller-configmap
+  data:
+    workflowDefaults: |
+      spec:
+        serviceAccountName: workflow     
